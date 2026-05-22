@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>货币兑换</title>
+    <title>货币兑换系统</title>
     <style>
         * {
             margin: 0;
@@ -31,7 +31,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        /* 三列等高布局 */
         .main-layout {
             display: grid;
             grid-template-columns: 1fr 400px 1fr;
@@ -92,7 +91,7 @@
             gap: 4%;
         }
         
-        .register-btn, .search-btn {
+        .register-btn {
             width: 48%;
             padding: 10px;
             border: none;
@@ -100,14 +99,9 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        /* 新注册按钮 - 金色在左边 */
-        .register-btn {
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
-            margin-right: 4%;
+            transition: all 0.2s;
         }
         
         .register-btn:hover {
@@ -116,10 +110,17 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
         
-        /* 搜索按钮 - 原有颜色在右边 */
         .search-btn {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            transition: all 0.2s;
         }
         
         .search-btn:hover {
@@ -545,12 +546,10 @@
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
         
-        /* 响应式调整 */
         @media (max-width: 1200px) {
             .main-layout {
                 grid-template-columns: 1fr 320px 1fr;
             }
-            
             .exchange-grid {
                 grid-template-columns: 1fr;
             }
@@ -560,7 +559,6 @@
             .main-layout {
                 grid-template-columns: 1fr;
             }
-            
             .exchange-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -570,7 +568,6 @@
             .exchange-grid {
                 grid-template-columns: 1fr;
             }
-            
             h1 {
                 font-size: 24px;
             }
@@ -593,7 +590,7 @@
                             <div class="currency-name-en">Chinese Yuan</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="0.92" step="0.001">
+                                <input type="number" class="rate-input" value="0.92" step="0.001" data-operation="multiply">
                                 <span>人民币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -607,7 +604,7 @@
                             <div class="currency-name-en">US Dollar</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="0.128" step="0.001">
+                                <input type="number" class="rate-input" value="0.128" step="0.001" data-operation="divide">
                                 <span>美元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -621,7 +618,7 @@
                             <div class="currency-name-en">Euro</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="0.116" step="0.001">
+                                <input type="number" class="rate-input" value="0.116" step="0.001" data-operation="divide">
                                 <span>欧元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -635,7 +632,7 @@
                             <div class="currency-name-en">British Pound</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="0.101" step="0.001">
+                                <input type="number" class="rate-input" value="0.101" step="0.001" data-operation="divide">
                                 <span>英镑</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -649,7 +646,7 @@
                             <div class="currency-name-en">Australian Dollar</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="0.198" step="0.001">
+                                <input type="number" class="rate-input" value="0.198" step="0.001" data-operation="divide">
                                 <span>澳元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -663,7 +660,7 @@
                             <div class="currency-name-en">Japanese Yen</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="21.5" step="0.1">
+                                <input type="number" class="rate-input" value="21.5" step="0.1" data-operation="divide">
                                 <span>日元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -677,7 +674,7 @@
                             <div class="currency-name-en">Korean Won</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="175" step="1">
+                                <input type="number" class="rate-input" value="175" step="1" data-operation="divide">
                                 <span>韩元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -691,7 +688,7 @@
                             <div class="currency-name-en">New Taiwan Dollar</div>
                             <div class="exchange-rate">
                                 <span>1港币 =</span>
-                                <input type="number" class="rate-input" value="4.35" step="0.01">
+                                <input type="number" class="rate-input" value="4.35" step="0.01" data-operation="divide">
                                 <span>台币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -711,9 +708,7 @@
                     <div class="search-bar">
                         <input type="text" class="search-input" placeholder="输入会员码搜索..." id="memberSearch">
                         <div class="btn-group">
-                            <!-- 新注册按钮在左边，金色 -->
                             <button class="register-btn" onclick="showRegisterModal()">➕ 新注册</button>
-                            <!-- 搜索按钮在右边，原有颜色 -->
                             <button class="search-btn" onclick="searchMember()">🔍 搜索</button>
                         </div>
                     </div>
@@ -801,7 +796,7 @@
                             <div class="currency-name-en">Chinese Yuan</div>
                             <div class="exchange-rate">
                                 <span>1人民币 =</span>
-                                <input type="number" class="rate-input" value="1.09" step="0.001">
+                                <input type="number" class="rate-input" value="1.09" step="0.001" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入人民币金额">
@@ -815,7 +810,7 @@
                             <div class="currency-name-en">US Dollar</div>
                             <div class="exchange-rate">
                                 <span>1美元 =</span>
-                                <input type="number" class="rate-input" value="7.81" step="0.01">
+                                <input type="number" class="rate-input" value="7.81" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入美元金额">
@@ -829,7 +824,7 @@
                             <div class="currency-name-en">Euro</div>
                             <div class="exchange-rate">
                                 <span>1欧元 =</span>
-                                <input type="number" class="rate-input" value="8.62" step="0.01">
+                                <input type="number" class="rate-input" value="8.62" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入欧元金额">
@@ -843,7 +838,7 @@
                             <div class="currency-name-en">British Pound</div>
                             <div class="exchange-rate">
                                 <span>1英镑 =</span>
-                                <input type="number" class="rate-input" value="9.92" step="0.01">
+                                <input type="number" class="rate-input" value="9.92" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入英镑金额">
@@ -857,7 +852,7 @@
                             <div class="currency-name-en">Australian Dollar</div>
                             <div class="exchange-rate">
                                 <span>1澳元 =</span>
-                                <input type="number" class="rate-input" value="5.05" step="0.01">
+                                <input type="number" class="rate-input" value="5.05" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入澳元金额">
@@ -871,7 +866,7 @@
                             <div class="currency-name-en">Japanese Yen</div>
                             <div class="exchange-rate">
                                 <span>100日元 =</span>
-                                <input type="number" class="rate-input" value="4.65" step="0.01">
+                                <input type="number" class="rate-input" value="4.65" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入日元金额">
@@ -885,7 +880,7 @@
                             <div class="currency-name-en">Korean Won</div>
                             <div class="exchange-rate">
                                 <span>1000韩元 =</span>
-                                <input type="number" class="rate-input" value="5.71" step="0.01">
+                                <input type="number" class="rate-input" value="5.71" step="0.01" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入韩元金额">
@@ -899,7 +894,7 @@
                             <div class="currency-name-en">New Taiwan Dollar</div>
                             <div class="exchange-rate">
                                 <span>1台币 =</span>
-                                <input type="number" class="rate-input" value="0.23" step="0.001">
+                                <input type="number" class="rate-input" value="0.23" step="0.001" data-operation="multiply">
                                 <span>港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入台币金额">
@@ -936,19 +931,19 @@
             <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
                 <div>
                     <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">客户姓名</label>
-                    <input type="text" class="search-input" placeholder="请输入客户姓名" required>
+                    <input type="text" class="search-input" placeholder="请输入客户姓名" name="name" required>
                 </div>
                 <div>
                     <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">联系电话</label>
-                    <input type="tel" class="search-input" placeholder="请输入联系电话" required>
+                    <input type="tel" class="search-input" placeholder="请输入联系电话" name="phone" required>
                 </div>
                 <div>
                     <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">身份证号码</label>
-                    <input type="text" class="search-input" placeholder="请输入身份证号码" required>
+                    <input type="text" class="search-input" placeholder="请输入身份证号码" name="idCard" required>
                 </div>
                 <div>
                     <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">地址</label>
-                    <input type="text" class="search-input" placeholder="请输入地址">
+                    <input type="text" class="search-input" placeholder="请输入地址" name="address">
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="close-btn" onclick="closeRegisterModal()" style="width: 48%;">取消</button>
@@ -960,32 +955,47 @@
     
     <script>
         // 汇率计算功能
-        const currencyCards = document.querySelectorAll('.currency-card');
-        
-        currencyCards.forEach(card => {
-            const rateInput = card.querySelector('.rate-input');
-            const amountInput = card.querySelector('.amount-input');
-            const resultBox = card.querySelector('.result-box');
-            const resultText = resultBox.textContent;
-            const currencyName = resultText.substring(resultText.indexOf(' ') + 1);
+        document.addEventListener('DOMContentLoaded', function() {
+            const currencyCards = document.querySelectorAll('.currency-card');
             
-            function calculate() {
-                const rate = parseFloat(rateInput.value) || 0;
-                const amount = parseFloat(amountInput.value) || 0;
-                const result = (rate * amount).toFixed(2);
-                resultBox.textContent = result + ' ' + currencyName;
-            }
-            
-            rateInput.addEventListener('input', calculate);
-            amountInput.addEventListener('input', calculate);
+            currencyCards.forEach(card => {
+                const rateInput = card.querySelector('.rate-input');
+                const amountInput = card.querySelector('.amount-input');
+                const resultBox = card.querySelector('.result-box');
+                const resultText = resultBox.textContent;
+                const currencyName = resultText.substring(resultText.indexOf(' ') + 1);
+                
+                function calculate() {
+                    const rate = parseFloat(rateInput.value) || 0;
+                    const amount = parseFloat(amountInput.value) || 0;
+                    let result;
+                    
+                    // 根据操作类型进行计算
+                    const operation = rateInput.dataset.operation || 'multiply';
+                    if (operation === 'divide') {
+                        // 港币 ÷ 汇率 = 目标货币
+                        result = (amount / rate).toFixed(2);
+                    } else {
+                        // 港币 × 汇率 = 目标货币（或其他货币 × 汇率 = 港币）
+                        result = (rate * amount).toFixed(2);
+                    }
+                    
+                    resultBox.textContent = result + ' ' + currencyName;
+                }
+                
+                rateInput.addEventListener('input', calculate);
+                amountInput.addEventListener('input', calculate);
+            });
         });
         
         // 证件图片点击事件
-        const docBoxes = document.querySelectorAll('.doc-image-box');
-        docBoxes.forEach(box => {
-            box.addEventListener('click', () => {
-                const label = box.querySelector('.doc-label').textContent;
-                alert(`查看${label}图片`);
+        document.addEventListener('DOMContentLoaded', function() {
+            const docBoxes = document.querySelectorAll('.doc-image-box');
+            docBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    const label = box.querySelector('.doc-label').textContent;
+                    alert(`查看${label}图片`);
+                });
             });
         });
         
