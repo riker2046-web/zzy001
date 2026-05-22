@@ -436,7 +436,7 @@
             text-align: center;
         }
         
-        /* 55mm小票容器 */
+        /* 58mm小票容器 */
         .receipt-container {
             background: #fff;
             border: 1px solid #ddd;
@@ -445,7 +445,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 11px;
             line-height: 1.5;
-            max-width: 220px; /* 55mm ≈ 220px */
+            max-width: 232px; /* 58mm ≈ 232px */
             margin: 0 auto;
         }
         
@@ -1117,10 +1117,10 @@
         </div>
     </div>
     
-    <!-- 55mm小票弹窗 -->
+    <!-- 58mm小票弹窗 -->
     <div class="modal-overlay" id="receiptModal">
         <div class="modal-content">
-            <div class="modal-title">📄 55mm 兑换凭证</div>
+            <div class="modal-title">📄 58mm 兑换凭证</div>
             <div class="receipt-container" id="receiptContent">
                 <!-- 小票内容将动态生成 -->
             </div>
@@ -1380,7 +1380,7 @@
             document.getElementById('assessmentModal').classList.remove('show');
         }
         
-        // 显示55mm小票弹窗
+        // 显示58mm小票弹窗
         function showReceipt(fromCurrency, toCurrency, toCurrencyEn, resultBox) {
             const modal = document.getElementById('receiptModal');
             const receiptContent = document.getElementById('receiptContent');
@@ -1464,7 +1464,7 @@
             document.getElementById('receiptModal').classList.remove('show');
         }
         
-        // 打印55mm小票
+        // 打印58mm小票
         function printReceipt() {
             const receiptContent = document.getElementById('receiptContent');
             
@@ -1480,7 +1480,7 @@
                             font-size: 11px;
                             line-height: 1.5;
                             padding: 10px;
-                            width: 55mm;
+                            width: 58mm;
                             margin: 0 auto;
                         }
                         .receipt-header {
