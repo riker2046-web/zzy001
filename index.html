@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>货币兑换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* 三列等高布局 */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px 1fr;
+            gap: 25px;
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        /* 搜索栏样式 */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 4%;
+        }
+        
+        .register-btn, .search-btn {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        /* 新注册按钮 - 金色在左边 */
+        .register-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            margin-right: 4%;
+        }
+        
+        .register-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* 搜索按钮 - 原有颜色在右边 */
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .search-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 兑换区域样式 */
+        .exchange-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            flex: 1;
+            align-content: flex-start;
+        }
+        
+        .currency-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .currency-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .currency-flag {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .currency-name-cn {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .currency-name-en {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        .exchange-rate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .exchange-rate span {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .exchange-rate input {
+            width: 80px;
+            padding: 7px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .amount-input {
+            width: 100%;
+            padding: 9px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .result-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .result-box::after {
+            content: '📄';
+            font-size: 14px;
+        }
+        
+        .result-hint {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+        }
+        
+        /* 客户信息样式 */
+        .customer-info-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .customer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 6px;
+            display: block;
+        }
+        
+        .info-value {
+            font-size: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .vip-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .customer-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        /* 证件图片样式 */
+        .document-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .doc-image-box {
+            background: #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .doc-image-box:hover {
+            background: #d1d5db;
+        }
+        
+        .doc-icon {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .doc-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* 审查状态样式 */
+        .review-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-approved {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .status-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        /* 审查项目样式 */
+        .review-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .review-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .review-label {
+            font-size: 13px;
+            color: #555;
+        }
+        
+        .review-status-badge {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+        
+        /* 小票弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 420px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .receipt-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .receipt-header h3 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        
+        .receipt-header p {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .receipt-body {
+            margin-bottom: 10px;
+        }
+        
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .receipt-row .label {
+            color: #666;
+        }
+        
+        .receipt-row .value {
+            font-weight: bold;
+        }
+        
+        .receipt-exchange {
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .receipt-exchange .title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .receipt-total {
+            border-top: 2px solid #333;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .receipt-total .amount {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .receipt-footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+            font-size: 10px;
+            color: #888;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .close-btn, .print-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .close-btn {
+            background: #e5e7eb;
+            color: #333;
+        }
+        
+        .close-btn:hover {
+            background: #d1d5db;
+        }
+        
+        .print-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr 320px 1fr;
+            }
+            
+            .exchange-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .exchange-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .exchange-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 货币兑换系统</h1>
+        
+        <div class="main-layout">
+            <!-- 第一部分：港币兑换其他货币（左侧） -->
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">港币兑换其他货币</div>
+                    <div class="exchange-grid">
+                        <div class="currency-card">
+                            <div class="currency-flag">🇨🇳</div>
+                            <div class="currency-name-cn">人民币</div>
+                            <div class="currency-name-en">Chinese Yuan</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="0.92" step="0.001">
+                                <span>人民币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '人民币', 'Chinese Yuan', this)">0.00 人民币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇺🇸</div>
+                            <div class="currency-name-cn">美元</div>
+                            <div class="currency-name-en">US Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="0.128" step="0.001">
+                                <span>美元</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '美元', 'US Dollar', this)">0.00 美元</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇪🇺</div>
+                            <div class="currency-name-cn">欧元</div>
+                            <div class="currency-name-en">Euro</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="0.116" step="0.001">
+                                <span>欧元</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '欧元', 'Euro', this)">0.00 欧元</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇬🇧</div>
+                            <div class="currency-name-cn">英镑</div>
+                            <div class="currency-name-en">British Pound</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="0.101" step="0.001">
+                                <span>英镑</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '英镑', 'British Pound', this)">0.00 英镑</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇦🇺</div>
+                            <div class="currency-name-cn">澳元</div>
+                            <div class="currency-name-en">Australian Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="0.198" step="0.001">
+                                <span>澳元</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '澳元', 'Australian Dollar', this)">0.00 澳元</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇯🇵</div>
+                            <div class="currency-name-cn">日元</div>
+                            <div class="currency-name-en">Japanese Yen</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="21.5" step="0.1">
+                                <span>日元</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '日元', 'Japanese Yen', this)">0.00 日元</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇰🇷</div>
+                            <div class="currency-name-cn">韩元</div>
+                            <div class="currency-name-en">Korean Won</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="175" step="1">
+                                <span>韩元</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '韩元', 'Korean Won', this)">0.00 韩元</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇹🇼</div>
+                            <div class="currency-name-cn">台币</div>
+                            <div class="currency-name-en">New Taiwan Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1港币 =</span>
+                                <input type="number" class="rate-input" value="4.35" step="0.01">
+                                <span>台币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入港币金额">
+                            <div class="result-box" onclick="showReceipt('港币', '台币', 'New Taiwan Dollar', this)">0.00 台币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第二部分：客户信息（中间） -->
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">客户信息</div>
+                    
+                    <!-- 搜索和注册栏 -->
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="输入会员码搜索..." id="memberSearch">
+                        <div class="btn-group">
+                            <!-- 新注册按钮在左边，金色 -->
+                            <button class="register-btn" onclick="showRegisterModal()">➕ 新注册</button>
+                            <!-- 搜索按钮在右边，原有颜色 -->
+                            <button class="search-btn" onclick="searchMember()">🔍 搜索</button>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-info-wrapper">
+                        <div style="text-align: center;">
+                            <div class="customer-photo">张</div>
+                            <div class="vip-badge">重要会员</div>
+                        </div>
+                        
+                        <div class="customer-info">
+                            <div class="info-item">
+                                <span class="info-label">会员号码</span>
+                                <span class="info-value">VIP-2024-00156</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">客户姓名</span>
+                                <span class="info-value">张三</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">联系电话</span>
+                                <span class="info-value">13800138000</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">注册日期</span>
+                                <span class="info-value">2024年01月15日 10:30</span>
+                            </div>
+                            
+                            <!-- 证件图片 -->
+                            <div class="info-item">
+                                <span class="info-label">上传证件</span>
+                                <div class="document-images">
+                                    <div class="doc-image-box" title="点击查看身份证">
+                                        <div class="doc-icon">🆔</div>
+                                        <div class="doc-label">身份证件</div>
+                                    </div>
+                                    <div class="doc-image-box" title="点击查看地址证明">
+                                        <div class="doc-icon">🏠</div>
+                                        <div class="doc-label">居住证明</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 审查项目 -->
+                            <div class="review-section">
+                                <span class="info-label" style="margin-bottom: 10px; display: block;">审核进度</span>
+                                <div class="review-item">
+                                    <span class="review-label">道琼斯筛查</span>
+                                    <span class="review-status-badge status-approved">✓ 已通过</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">尽职调查审核</span>
+                                    <span class="review-status-badge status-approved">✓ 已通过</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">风险等级评估</span>
+                                    <span class="review-status-badge status-approved">✓ 已通过</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 客户审查总状态 -->
+                            <div class="info-item">
+                                <span class="info-label">审核结果</span>
+                                <div class="review-status">
+                                    <span class="status-badge status-approved">✓ 审核通过</span>
+                                    <span class="info-value" style="font-size:13px;">完成日期: 2024-01-16</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第三部分：其他货币兑换港币（右侧） -->
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">其他货币兑换港币</div>
+                    <div class="exchange-grid">
+                        <div class="currency-card">
+                            <div class="currency-flag">🇨🇳</div>
+                            <div class="currency-name-cn">人民币</div>
+                            <div class="currency-name-en">Chinese Yuan</div>
+                            <div class="exchange-rate">
+                                <span>1人民币 =</span>
+                                <input type="number" class="rate-input" value="1.09" step="0.001">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入人民币金额">
+                            <div class="result-box" onclick="showReceipt('人民币', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇺🇸</div>
+                            <div class="currency-name-cn">美元</div>
+                            <div class="currency-name-en">US Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1美元 =</span>
+                                <input type="number" class="rate-input" value="7.81" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入美元金额">
+                            <div class="result-box" onclick="showReceipt('美元', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇪🇺</div>
+                            <div class="currency-name-cn">欧元</div>
+                            <div class="currency-name-en">Euro</div>
+                            <div class="exchange-rate">
+                                <span>1欧元 =</span>
+                                <input type="number" class="rate-input" value="8.62" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入欧元金额">
+                            <div class="result-box" onclick="showReceipt('欧元', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇬🇧</div>
+                            <div class="currency-name-cn">英镑</div>
+                            <div class="currency-name-en">British Pound</div>
+                            <div class="exchange-rate">
+                                <span>1英镑 =</span>
+                                <input type="number" class="rate-input" value="9.92" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入英镑金额">
+                            <div class="result-box" onclick="showReceipt('英镑', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇦🇺</div>
+                            <div class="currency-name-cn">澳元</div>
+                            <div class="currency-name-en">Australian Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1澳元 =</span>
+                                <input type="number" class="rate-input" value="5.05" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入澳元金额">
+                            <div class="result-box" onclick="showReceipt('澳元', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇯🇵</div>
+                            <div class="currency-name-cn">日元</div>
+                            <div class="currency-name-en">Japanese Yen</div>
+                            <div class="exchange-rate">
+                                <span>100日元 =</span>
+                                <input type="number" class="rate-input" value="4.65" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入日元金额">
+                            <div class="result-box" onclick="showReceipt('日元', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇰🇷</div>
+                            <div class="currency-name-cn">韩元</div>
+                            <div class="currency-name-en">Korean Won</div>
+                            <div class="exchange-rate">
+                                <span>1000韩元 =</span>
+                                <input type="number" class="rate-input" value="5.71" step="0.01">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入韩元金额">
+                            <div class="result-box" onclick="showReceipt('韩元', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                        
+                        <div class="currency-card">
+                            <div class="currency-flag">🇹🇼</div>
+                            <div class="currency-name-cn">台币</div>
+                            <div class="currency-name-en">New Taiwan Dollar</div>
+                            <div class="exchange-rate">
+                                <span>1台币 =</span>
+                                <input type="number" class="rate-input" value="0.23" step="0.001">
+                                <span>港币</span>
+                            </div>
+                            <input type="number" class="amount-input" placeholder="输入台币金额">
+                            <div class="result-box" onclick="showReceipt('台币', '港币', 'Hong Kong Dollar', this)">0.00 港币</div>
+                            <div class="result-hint">点击金额打印小票</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 小票弹窗 -->
+    <div class="modal-overlay" id="receiptModal">
+        <div class="modal-content">
+            <div class="modal-title">📄 80mm 兑换凭证</div>
+            <div class="receipt-container" id="receiptContent">
+                <!-- 小票内容将动态生成 -->
+            </div>
+            <div class="modal-actions">
+                <button class="close-btn" onclick="closeReceipt()">关闭</button>
+                <button class="print-btn" onclick="printReceipt()">
+                    <span>🖨️</span>
+                    <span>打印小票</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新注册弹窗 -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-title">➕ 新会员注册</div>
+            <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">客户姓名</label>
+                    <input type="text" class="search-input" placeholder="请输入客户姓名" required>
+                </div>
+                <div>
+                    <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">联系电话</label>
+                    <input type="tel" class="search-input" placeholder="请输入联系电话" required>
+                </div>
+                <div>
+                    <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">身份证号码</label>
+                    <input type="text" class="search-input" placeholder="请输入身份证号码" required>
+                </div>
+                <div>
+                    <label style="font-size: 13px; color: #666; margin-bottom: 5px; display: block;">地址</label>
+                    <input type="text" class="search-input" placeholder="请输入地址">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="close-btn" onclick="closeRegisterModal()" style="width: 48%;">取消</button>
+                    <button type="submit" class="register-btn" style="width: 48%;">确认注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // 汇率计算功能
+        const currencyCards = document.querySelectorAll('.currency-card');
+        
+        currencyCards.forEach(card => {
+            const rateInput = card.querySelector('.rate-input');
+            const amountInput = card.querySelector('.amount-input');
+            const resultBox = card.querySelector('.result-box');
+            const resultText = resultBox.textContent;
+            const currencyName = resultText.substring(resultText.indexOf(' ') + 1);
+            
+            function calculate() {
+                const rate = parseFloat(rateInput.value) || 0;
+                const amount = parseFloat(amountInput.value) || 0;
+                const result = (rate * amount).toFixed(2);
+                resultBox.textContent = result + ' ' + currencyName;
+            }
+            
+            rateInput.addEventListener('input', calculate);
+            amountInput.addEventListener('input', calculate);
+        });
+        
+        // 证件图片点击事件
+        const docBoxes = document.querySelectorAll('.doc-image-box');
+        docBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const label = box.querySelector('.doc-label').textContent;
+                alert(`查看${label}图片`);
+            });
+        });
+        
+        // 搜索会员
+        function searchMember() {
+            const searchValue = document.getElementById('memberSearch').value;
+            if (searchValue) {
+                alert(`正在搜索会员: ${searchValue}`);
+            } else {
+                alert('请输入会员码进行搜索');
+            }
+        }
+        
+        // 显示注册弹窗
+        function showRegisterModal() {
+            document.getElementById('registerModal').classList.add('show');
+        }
+        
+        // 关闭注册弹窗
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.remove('show');
+            document.getElementById('registerForm').reset();
+        }
+        
+        // 注册表单提交
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('会员注册成功！');
+            closeRegisterModal();
+        });
+        
+        // 显示小票弹窗
+        function showReceipt(fromCurrency, toCurrency, toCurrencyEn, resultBox) {
+            const modal = document.getElementById('receiptModal');
+            const receiptContent = document.getElementById('receiptContent');
+            
+            const resultText = resultBox.textContent;
+            const [amount, _] = resultText.split(' ');
+            const card = resultBox.parentElement;
+            const rateInput = card.querySelector('.rate-input');
+            const amountInput = card.querySelector('.amount-input');
+            const rate = rateInput.value;
+            const sourceAmount = amountInput.value || '0';
+            
+            const now = new Date();
+            const dateStr = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
+            const timeStr = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            const receiptNo = 'R' + Date.now();
+            
+            receiptContent.innerHTML = `
+                <div class="receipt-header">
+                    <h3>货币兑换凭证</h3>
+                    <p>Currency Exchange Receipt</p>
+                </div>
+                
+                <div class="receipt-body">
+                    <div class="receipt-row">
+                        <span class="label">交易编号:</span>
+                        <span class="value">${receiptNo}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">交易日期:</span>
+                        <span class="value">${dateStr}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">交易时间:</span>
+                        <span class="value">${timeStr}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">会员号码:</span>
+                        <span class="value">VIP-2024-00156</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">客户姓名:</span>
+                        <span class="value">张三</span>
+                    </div>
+                </div>
+                
+                <div class="receipt-exchange">
+                    <div class="title">${fromCurrency} → ${toCurrency}</div>
+                    <div class="receipt-row">
+                        <span class="label">兑换金额:</span>
+                        <span class="value">${sourceAmount} ${fromCurrency}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">汇率:</span>
+                        <span class="value">1 ${fromCurrency} = ${rate} ${toCurrency}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">兑换结果:</span>
+                        <span class="value">${amount} ${toCurrency}</span>
+                    </div>
+                </div>
+                
+                <div class="receipt-total">
+                    <div class="receipt-row amount">
+                        <span class="label">实付金额:</span>
+                        <span class="value">${amount} ${toCurrency}</span>
+                    </div>
+                </div>
+                
+                <div class="receipt-footer">
+                    <p>感谢您的使用！</p>
+                    <p>Thank you for your business!</p>
+                    <p style="margin-top: 8px;">客服热线: 400-888-8888</p>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+        
+        // 关闭小票弹窗
+        function closeReceipt() {
+            document.getElementById('receiptModal').classList.remove('show');
+        }
+        
+        // 打印小票
+        function printReceipt() {
+            const receiptContent = document.getElementById('receiptContent');
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>打印兑换凭证</title>
+                    <style>
+                        body {
+                            font-family: 'Courier New', Courier, monospace;
+                            font-size: 12px;
+                            line-height: 1.6;
+                            padding: 10px;
+                            width: 80mm;
+                            margin: 0 auto;
+                        }
+                        .receipt-header {
+                            text-align: center;
+                            margin-bottom: 12px;
+                            padding-bottom: 10px;
+                            border-bottom: 1px dashed #ccc;
+                        }
+                        .receipt-header h3 {
+                            font-size: 14px;
+                            margin-bottom: 3px;
+                        }
+                        .receipt-header p {
+                            font-size: 10px;
+                            color: #666;
+                        }
+                        .receipt-row {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 4px;
+                        }
+                        .receipt-row .label {
+                            color: #666;
+                        }
+                        .receipt-row .value {
+                            font-weight: bold;
+                        }
+                        .receipt-exchange {
+                            border-top: 1px dashed #ccc;
+                            padding-top: 10px;
+                            margin-top: 10px;
+                        }
+                        .receipt-exchange .title {
+                            font-weight: bold;
+                            text-align: center;
+                            margin-bottom: 8px;
+                        }
+                        .receipt-total {
+                            border-top: 2px solid #333;
+                            padding-top: 10px;
+                            margin-top: 10px;
+                        }
+                        .receipt-total .amount {
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+                        .receipt-footer {
+                            text-align: center;
+                            margin-top: 15px;
+                            padding-top: 10px;
+                            border-top: 1px dashed #ccc;
+                            font-size: 10px;
+                            color: #888;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${receiptContent.innerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            
+            printWindow.onload = function() {
+                printWindow.print();
+                printWindow.close();
+            };
+            
+            closeReceipt();
+        }
+    </script>
+</body>
+</html>
