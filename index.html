@@ -310,11 +310,12 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         
         .doc-image-box:hover {
             background: #d1d5db;
+            transform: scale(1.02);
         }
         
         .doc-icon {
@@ -372,6 +373,13 @@
             background: white;
             border-radius: 8px;
             margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .review-item:hover {
+            background: #f0f9ff;
+            transform: translateX(5px);
         }
         
         .review-item:last-child {
@@ -412,7 +420,7 @@
             background: white;
             border-radius: 12px;
             padding: 20px;
-            max-width: 420px;
+            max-width: 400px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -428,43 +436,44 @@
             text-align: center;
         }
         
+        /* 55mm小票容器 */
         .receipt-container {
             background: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
+            padding: 15px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            max-width: 320px;
+            font-size: 11px;
+            line-height: 1.5;
+            max-width: 220px; /* 55mm ≈ 220px */
             margin: 0 auto;
         }
         
         .receipt-header {
             text-align: center;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 1px dashed #ccc;
         }
         
         .receipt-header h3 {
-            font-size: 14px;
-            margin-bottom: 3px;
+            font-size: 12px;
+            margin-bottom: 2px;
         }
         
         .receipt-header p {
-            font-size: 10px;
+            font-size: 9px;
             color: #666;
         }
         
         .receipt-body {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .receipt-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         
         .receipt-row .label {
@@ -477,33 +486,33 @@
         
         .receipt-exchange {
             border-top: 1px dashed #ccc;
-            padding-top: 10px;
-            margin-top: 10px;
+            padding-top: 8px;
+            margin-top: 8px;
         }
         
         .receipt-exchange .title {
             font-weight: bold;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .receipt-total {
             border-top: 2px solid #333;
-            padding-top: 10px;
-            margin-top: 10px;
+            padding-top: 8px;
+            margin-top: 8px;
         }
         
         .receipt-total .amount {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
         }
         
         .receipt-footer {
             text-align: center;
-            margin-top: 15px;
-            padding-top: 10px;
+            margin-top: 12px;
+            padding-top: 8px;
             border-top: 1px dashed #ccc;
-            font-size: 10px;
+            font-size: 9px;
             color: #888;
         }
         
@@ -544,6 +553,191 @@
         .print-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* 证件操作弹窗 */
+        .doc-actions-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .doc-actions-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .doc-actions-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .doc-actions-btn.add {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .doc-actions-btn.camera {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .doc-actions-btn.cancel {
+            background: #e5e7eb;
+            color: #333;
+        }
+        
+        .doc-actions-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* 筛查结果弹窗 */
+        .screening-result-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .screening-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .screening-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .screening-label {
+            font-size: 13px;
+            color: #555;
+        }
+        
+        .screening-value {
+            font-size: 13px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+        
+        /* 问卷弹窗 */
+        .questionnaire-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .questionnaire-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .question-item {
+            margin-bottom: 20px;
+        }
+        
+        .question-text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .option-label:hover {
+            background: #e5e7eb;
+        }
+        
+        .option-label input {
+            margin-right: 10px;
+        }
+        
+        /* 评估单弹窗 */
+        .assessment-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .assessment-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .assessment-item {
+            margin-bottom: 15px;
+        }
+        
+        .assessment-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .assessment-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .assessment-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f59e0b;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fffbeb;
+            border-radius: 10px;
         }
         
         @media (max-width: 1200px) {
@@ -752,11 +946,11 @@
                             <div class="info-item">
                                 <span class="info-label">上传证件</span>
                                 <div class="document-images">
-                                    <div class="doc-image-box" title="点击查看身份证">
+                                    <div class="doc-image-box" onclick="showDocActions('身份证')">
                                         <div class="doc-icon">🆔</div>
                                         <div class="doc-label">身份证件</div>
                                     </div>
-                                    <div class="doc-image-box" title="点击查看地址证明">
+                                    <div class="doc-image-box" onclick="showDocActions('地址证明')">
                                         <div class="doc-icon">🏠</div>
                                         <div class="doc-label">居住证明</div>
                                     </div>
@@ -765,16 +959,16 @@
                             
                             <!-- 审查项目 -->
                             <div class="review-section">
-                                <span class="info-label" style="margin-bottom: 10px; display: block;">审核进度</span>
-                                <div class="review-item">
+                                <span class="info-label" style="margin-bottom: 10px; display: block;">审核项目</span>
+                                <div class="review-item" onclick="showScreeningResult()">
                                     <span class="review-label">道琼斯筛查</span>
                                     <span class="review-status-badge status-approved">✓ 已通过</span>
                                 </div>
-                                <div class="review-item">
+                                <div class="review-item" onclick="showQuestionnaire()">
                                     <span class="review-label">尽职调查审核</span>
                                     <span class="review-status-badge status-approved">✓ 已通过</span>
                                 </div>
-                                <div class="review-item">
+                                <div class="review-item" onclick="showAssessment()">
                                     <span class="review-label">风险等级评估</span>
                                     <span class="review-status-badge status-approved">✓ 已通过</span>
                                 </div>
@@ -923,10 +1117,10 @@
         </div>
     </div>
     
-    <!-- 小票弹窗 -->
+    <!-- 55mm小票弹窗 -->
     <div class="modal-overlay" id="receiptModal">
         <div class="modal-content">
-            <div class="modal-title">📄 80mm 兑换凭证</div>
+            <div class="modal-title">📄 55mm 兑换凭证</div>
             <div class="receipt-container" id="receiptContent">
                 <!-- 小票内容将动态生成 -->
             </div>
@@ -969,7 +1163,109 @@
         </div>
     </div>
     
+    <!-- 证件操作弹窗 -->
+    <div class="modal-overlay" id="docActionsModal">
+        <div class="doc-actions-modal">
+            <div class="doc-actions-title" id="docActionsTitle">选择操作</div>
+            <button class="doc-actions-btn add" onclick="addDocument()">📁 添加证件图片</button>
+            <button class="doc-actions-btn camera" onclick="takePhoto()">📷 拍照上传</button>
+            <button class="doc-actions-btn cancel" onclick="closeDocActions()">❌ 取消</button>
+        </div>
+    </div>
+    
+    <!-- 道琼斯筛查结果弹窗 -->
+    <div class="modal-overlay" id="screeningModal">
+        <div class="screening-result-modal">
+            <div class="screening-title">📋 道琼斯筛查结果</div>
+            <div class="screening-item">
+                <span class="screening-label">筛查状态</span>
+                <span class="screening-value">✓ 通过</span>
+            </div>
+            <div class="screening-item">
+                <span class="screening-label">筛查日期</span>
+                <span class="screening-value">2024-01-15</span>
+            </div>
+            <div class="screening-item">
+                <span class="screening-label">匹配结果</span>
+                <span class="screening-value">无匹配记录</span>
+            </div>
+            <div class="screening-item">
+                <span class="screening-label">风险等级</span>
+                <span class="screening-value">低风险</span>
+            </div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button class="close-btn" onclick="closeScreening()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 尽职调查问卷弹窗 -->
+    <div class="modal-overlay" id="questionnaireModal">
+        <div class="questionnaire-modal">
+            <div class="questionnaire-title">📝 尽职调查问卷</div>
+            <div class="question-item">
+                <div class="question-text">1. 您从事的主要行业是什么？</div>
+                <div class="question-options">
+                    <label class="option-label"><input type="radio" name="q1" value="a"> 金融服务</label>
+                    <label class="option-label"><input type="radio" name="q1" value="b"> 贸易/进出口</label>
+                    <label class="option-label"><input type="radio" name="q1" value="c"> 制造业</label>
+                    <label class="option-label"><input type="radio" name="q1" value="d"> 其他</label>
+                </div>
+            </div>
+            <div class="question-item">
+                <div class="question-text">2. 您的资金来源主要是？</div>
+                <div class="question-options">
+                    <label class="option-label"><input type="radio" name="q2" value="a"> 工资收入</label>
+                    <label class="option-label"><input type="radio" name="q2" value="b"> 投资收益</label>
+                    <label class="option-label"><input type="radio" name="q2" value="c"> 经营收入</label>
+                    <label class="option-label"><input type="radio" name="q2" value="d"> 其他</label>
+                </div>
+            </div>
+            <div class="question-item">
+                <div class="question-text">3. 您是否有海外资产？</div>
+                <div class="question-options">
+                    <label class="option-label"><input type="radio" name="q3" value="a"> 是</label>
+                    <label class="option-label"><input type="radio" name="q3" value="b"> 否</label>
+                </div>
+            </div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button class="close-btn" onclick="closeQuestionnaire()">关闭</button>
+                <button class="register-btn" style="padding: 12px 30px;">提交问卷</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 风险评估单弹窗 -->
+    <div class="modal-overlay" id="assessmentModal">
+        <div class="assessment-modal">
+            <div class="assessment-title">📊 风险评估报告</div>
+            <div class="assessment-item">
+                <span class="assessment-label">评估编号</span>
+                <span class="assessment-value">RA-2024-00156</span>
+            </div>
+            <div class="assessment-item">
+                <span class="assessment-label">评估日期</span>
+                <span class="assessment-value">2024-01-16</span>
+            </div>
+            <div class="assessment-item">
+                <span class="assessment-label">评估类型</span>
+                <span class="assessment-value">客户风险评估</span>
+            </div>
+            <div class="assessment-item">
+                <span class="assessment-label">评估等级</span>
+                <span class="assessment-value">低风险</span>
+            </div>
+            <div class="assessment-score">综合评分：85/100</div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button class="close-btn" onclick="closeAssessment()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
+        // 当前操作的证件类型
+        let currentDocType = '';
+        
         // 汇率计算功能
         document.addEventListener('DOMContentLoaded', function() {
             const currencyCards = document.querySelectorAll('.currency-card');
@@ -986,13 +1282,10 @@
                     const amount = parseFloat(amountInput.value) || 0;
                     let result;
                     
-                    // 根据操作类型进行计算
                     const operation = rateInput.dataset.operation || 'multiply';
                     if (operation === 'divide') {
-                        // 港币 ÷ 汇率 = 目标货币 或 人民币 ÷ 汇率 = 港币
                         result = (amount / rate).toFixed(2);
                     } else {
-                        // 港币 × 汇率 = 人民币 或 其他货币 × 汇率 = 港币
                         result = (rate * amount).toFixed(2);
                     }
                     
@@ -1001,17 +1294,6 @@
                 
                 rateInput.addEventListener('input', calculate);
                 amountInput.addEventListener('input', calculate);
-            });
-        });
-        
-        // 证件图片点击事件
-        document.addEventListener('DOMContentLoaded', function() {
-            const docBoxes = document.querySelectorAll('.doc-image-box');
-            docBoxes.forEach(box => {
-                box.addEventListener('click', () => {
-                    const label = box.querySelector('.doc-label').textContent;
-                    alert(`查看${label}图片`);
-                });
             });
         });
         
@@ -1043,7 +1325,62 @@
             closeRegisterModal();
         });
         
-        // 显示小票弹窗
+        // 显示证件操作弹窗
+        function showDocActions(docType) {
+            currentDocType = docType;
+            document.getElementById('docActionsTitle').textContent = `${docType} - 选择操作`;
+            document.getElementById('docActionsModal').classList.add('show');
+        }
+        
+        // 关闭证件操作弹窗
+        function closeDocActions() {
+            document.getElementById('docActionsModal').classList.remove('show');
+            currentDocType = '';
+        }
+        
+        // 添加证件图片
+        function addDocument() {
+            alert(`添加${currentDocType}图片`);
+            closeDocActions();
+        }
+        
+        // 拍照上传
+        function takePhoto() {
+            alert(`拍照上传${currentDocType}`);
+            closeDocActions();
+        }
+        
+        // 显示筛查结果
+        function showScreeningResult() {
+            document.getElementById('screeningModal').classList.add('show');
+        }
+        
+        // 关闭筛查结果
+        function closeScreening() {
+            document.getElementById('screeningModal').classList.remove('show');
+        }
+        
+        // 显示问卷
+        function showQuestionnaire() {
+            document.getElementById('questionnaireModal').classList.add('show');
+        }
+        
+        // 关闭问卷
+        function closeQuestionnaire() {
+            document.getElementById('questionnaireModal').classList.remove('show');
+        }
+        
+        // 显示评估单
+        function showAssessment() {
+            document.getElementById('assessmentModal').classList.add('show');
+        }
+        
+        // 关闭评估单
+        function closeAssessment() {
+            document.getElementById('assessmentModal').classList.remove('show');
+        }
+        
+        // 显示55mm小票弹窗
         function showReceipt(fromCurrency, toCurrency, toCurrencyEn, resultBox) {
             const modal = document.getElementById('receiptModal');
             const receiptContent = document.getElementById('receiptContent');
@@ -1057,14 +1394,14 @@
             const sourceAmount = amountInput.value || '0';
             
             const now = new Date();
-            const dateStr = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
-            const timeStr = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+            const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
             const receiptNo = 'R' + Date.now();
             
             receiptContent.innerHTML = `
                 <div class="receipt-header">
                     <h3>货币兑换凭证</h3>
-                    <p>Currency Exchange Receipt</p>
+                    <p>Currency Exchange</p>
                 </div>
                 
                 <div class="receipt-body">
@@ -1073,19 +1410,19 @@
                         <span class="value">${receiptNo}</span>
                     </div>
                     <div class="receipt-row">
-                        <span class="label">交易日期:</span>
+                        <span class="label">日期:</span>
                         <span class="value">${dateStr}</span>
                     </div>
                     <div class="receipt-row">
-                        <span class="label">交易时间:</span>
+                        <span class="label">时间:</span>
                         <span class="value">${timeStr}</span>
                     </div>
                     <div class="receipt-row">
-                        <span class="label">会员号码:</span>
+                        <span class="label">会员:</span>
                         <span class="value">VIP-2024-00156</span>
                     </div>
                     <div class="receipt-row">
-                        <span class="label">客户姓名:</span>
+                        <span class="label">姓名:</span>
                         <span class="value">张三</span>
                     </div>
                 </div>
@@ -1093,7 +1430,7 @@
                 <div class="receipt-exchange">
                     <div class="title">${fromCurrency} → ${toCurrency}</div>
                     <div class="receipt-row">
-                        <span class="label">兑换金额:</span>
+                        <span class="label">金额:</span>
                         <span class="value">${sourceAmount} ${fromCurrency}</span>
                     </div>
                     <div class="receipt-row">
@@ -1101,22 +1438,21 @@
                         <span class="value">${rate}</span>
                     </div>
                     <div class="receipt-row">
-                        <span class="label">兑换结果:</span>
+                        <span class="label">结果:</span>
                         <span class="value">${amount} ${toCurrency}</span>
                     </div>
                 </div>
                 
                 <div class="receipt-total">
                     <div class="receipt-row amount">
-                        <span class="label">实付金额:</span>
+                        <span class="label">实付:</span>
                         <span class="value">${amount} ${toCurrency}</span>
                     </div>
                 </div>
                 
                 <div class="receipt-footer">
-                    <p>感谢您的使用！</p>
-                    <p>Thank you for your business!</p>
-                    <p style="margin-top: 8px;">客服热线: 400-888-8888</p>
+                    <p>感谢使用</p>
+                    <p>客服: 400-888-8888</p>
                 </div>
             `;
             
@@ -1128,7 +1464,7 @@
             document.getElementById('receiptModal').classList.remove('show');
         }
         
-        // 打印小票
+        // 打印55mm小票
         function printReceipt() {
             const receiptContent = document.getElementById('receiptContent');
             
@@ -1141,30 +1477,30 @@
                     <style>
                         body {
                             font-family: 'Courier New', Courier, monospace;
-                            font-size: 12px;
-                            line-height: 1.6;
+                            font-size: 11px;
+                            line-height: 1.5;
                             padding: 10px;
-                            width: 80mm;
+                            width: 55mm;
                             margin: 0 auto;
                         }
                         .receipt-header {
                             text-align: center;
-                            margin-bottom: 12px;
-                            padding-bottom: 10px;
+                            margin-bottom: 10px;
+                            padding-bottom: 8px;
                             border-bottom: 1px dashed #ccc;
                         }
                         .receipt-header h3 {
-                            font-size: 14px;
-                            margin-bottom: 3px;
+                            font-size: 12px;
+                            margin-bottom: 2px;
                         }
                         .receipt-header p {
-                            font-size: 10px;
+                            font-size: 9px;
                             color: #666;
                         }
                         .receipt-row {
                             display: flex;
                             justify-content: space-between;
-                            margin-bottom: 4px;
+                            margin-bottom: 3px;
                         }
                         .receipt-row .label {
                             color: #666;
@@ -1174,29 +1510,29 @@
                         }
                         .receipt-exchange {
                             border-top: 1px dashed #ccc;
-                            padding-top: 10px;
-                            margin-top: 10px;
+                            padding-top: 8px;
+                            margin-top: 8px;
                         }
                         .receipt-exchange .title {
                             font-weight: bold;
                             text-align: center;
-                            margin-bottom: 8px;
+                            margin-bottom: 6px;
                         }
                         .receipt-total {
                             border-top: 2px solid #333;
-                            padding-top: 10px;
-                            margin-top: 10px;
+                            padding-top: 8px;
+                            margin-top: 8px;
                         }
                         .receipt-total .amount {
-                            font-size: 16px;
+                            font-size: 14px;
                             font-weight: bold;
                         }
                         .receipt-footer {
                             text-align: center;
-                            margin-top: 15px;
-                            padding-top: 10px;
+                            margin-top: 12px;
+                            padding-top: 8px;
                             border-top: 1px dashed #ccc;
-                            font-size: 10px;
+                            font-size: 9px;
                             color: #888;
                         }
                     </style>
@@ -1215,6 +1551,18 @@
             
             closeReceipt();
         }
+        
+        // 点击弹窗外部关闭
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlays = document.querySelectorAll('.modal-overlay');
+            overlays.forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('show');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
