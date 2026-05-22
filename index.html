@@ -168,7 +168,6 @@
             margin-bottom: 10px;
         }
         
-        /* 汇率调节区域 - 不显示具体数值 */
         .exchange-rate {
             display: flex;
             align-items: center;
@@ -190,18 +189,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            background: #f0f0f0;
-            /* 隐藏输入框中的数值显示，但保持可编辑 */
-            text-indent: -9999px;
-            line-height: 0;
-        }
-        
-        .exchange-rate input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            text-indent: 0;
-            line-height: normal;
         }
         
         .amount-input {
@@ -597,13 +584,14 @@
                 <div class="section">
                     <div class="section-title">港币兑换其他货币</div>
                     <div class="exchange-grid">
+                        <!-- 港币 × 人民币汇率 = 人民币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇨🇳</div>
                             <div class="currency-name-cn">人民币</div>
                             <div class="currency-name-en">Chinese Yuan</div>
                             <div class="exchange-rate">
                                 <span>港币 ×</span>
-                                <input type="number" class="rate-input" value="0.92" step="0.001" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.92" step="0.001" data-operation="multiply">
                                 <span>= 人民币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -611,13 +599,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 美元汇率 = 美元 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇺🇸</div>
                             <div class="currency-name-cn">美元</div>
                             <div class="currency-name-en">US Dollar</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="0.128" step="0.001" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.128" step="0.001" data-operation="divide">
                                 <span>= 美元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -625,13 +614,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 欧元汇率 = 欧元 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇪🇺</div>
                             <div class="currency-name-cn">欧元</div>
                             <div class="currency-name-en">Euro</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="0.116" step="0.001" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.116" step="0.001" data-operation="divide">
                                 <span>= 欧元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -639,13 +629,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 英镑汇率 = 英镑 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇬🇧</div>
                             <div class="currency-name-cn">英镑</div>
                             <div class="currency-name-en">British Pound</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="0.101" step="0.001" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.101" step="0.001" data-operation="divide">
                                 <span>= 英镑</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -653,13 +644,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 澳元汇率 = 澳元 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇦🇺</div>
                             <div class="currency-name-cn">澳元</div>
                             <div class="currency-name-en">Australian Dollar</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="0.198" step="0.001" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.198" step="0.001" data-operation="divide">
                                 <span>= 澳元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -667,13 +659,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 日元汇率 = 日元 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇯🇵</div>
                             <div class="currency-name-cn">日元</div>
                             <div class="currency-name-en">Japanese Yen</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="21.5" step="0.1" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="21.5" step="0.1" data-operation="divide">
                                 <span>= 日元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -681,13 +674,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 韩元汇率 = 韩元 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇰🇷</div>
                             <div class="currency-name-cn">韩元</div>
                             <div class="currency-name-en">Korean Won</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="175" step="1" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="175" step="1" data-operation="divide">
                                 <span>= 韩元</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -695,13 +689,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 港币 ÷ 台币汇率 = 台币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇹🇼</div>
                             <div class="currency-name-cn">台币</div>
                             <div class="currency-name-en">New Taiwan Dollar</div>
                             <div class="exchange-rate">
                                 <span>港币 ÷</span>
-                                <input type="number" class="rate-input" value="4.35" step="0.01" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="4.35" step="0.01" data-operation="divide">
                                 <span>= 台币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入港币金额">
@@ -803,13 +798,14 @@
                 <div class="section">
                     <div class="section-title">其他货币兑换港币</div>
                     <div class="exchange-grid">
+                        <!-- 人民币 ÷ 人民币汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇨🇳</div>
                             <div class="currency-name-cn">人民币</div>
                             <div class="currency-name-en">Chinese Yuan</div>
                             <div class="exchange-rate">
                                 <span>人民币 ÷</span>
-                                <input type="number" class="rate-input" value="1.09" step="0.001" data-operation="divide" title="汇率调节">
+                                <input type="number" class="rate-input" value="1.09" step="0.001" data-operation="divide">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入人民币金额">
@@ -817,13 +813,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 美元 × 美元汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇺🇸</div>
                             <div class="currency-name-cn">美元</div>
                             <div class="currency-name-en">US Dollar</div>
                             <div class="exchange-rate">
                                 <span>美元 ×</span>
-                                <input type="number" class="rate-input" value="7.81" step="0.01" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="7.81" step="0.01" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入美元金额">
@@ -831,13 +828,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 欧元 × 欧元汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇪🇺</div>
                             <div class="currency-name-cn">欧元</div>
                             <div class="currency-name-en">Euro</div>
                             <div class="exchange-rate">
                                 <span>欧元 ×</span>
-                                <input type="number" class="rate-input" value="8.62" step="0.01" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="8.62" step="0.01" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入欧元金额">
@@ -845,13 +843,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 英镑 × 英镑汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇬🇧</div>
                             <div class="currency-name-cn">英镑</div>
                             <div class="currency-name-en">British Pound</div>
                             <div class="exchange-rate">
                                 <span>英镑 ×</span>
-                                <input type="number" class="rate-input" value="9.92" step="0.01" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="9.92" step="0.01" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入英镑金额">
@@ -859,13 +858,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 澳元 × 澳元汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇦🇺</div>
                             <div class="currency-name-cn">澳元</div>
                             <div class="currency-name-en">Australian Dollar</div>
                             <div class="exchange-rate">
                                 <span>澳元 ×</span>
-                                <input type="number" class="rate-input" value="5.05" step="0.01" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="5.05" step="0.01" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入澳元金额">
@@ -873,13 +873,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 日元 × 日元汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇯🇵</div>
                             <div class="currency-name-cn">日元</div>
                             <div class="currency-name-en">Japanese Yen</div>
                             <div class="exchange-rate">
                                 <span>日元 ×</span>
-                                <input type="number" class="rate-input" value="0.0465" step="0.0001" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.0465" step="0.0001" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入日元金额">
@@ -887,13 +888,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 韩元 × 韩元汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇰🇷</div>
                             <div class="currency-name-cn">韩元</div>
                             <div class="currency-name-en">Korean Won</div>
                             <div class="exchange-rate">
                                 <span>韩元 ×</span>
-                                <input type="number" class="rate-input" value="0.00571" step="0.00001" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.00571" step="0.00001" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入韩元金额">
@@ -901,13 +903,14 @@
                             <div class="result-hint">点击金额打印小票</div>
                         </div>
                         
+                        <!-- 台币 × 台币汇率 = 港币 -->
                         <div class="currency-card">
                             <div class="currency-flag">🇹🇼</div>
                             <div class="currency-name-cn">台币</div>
                             <div class="currency-name-en">New Taiwan Dollar</div>
                             <div class="exchange-rate">
                                 <span>台币 ×</span>
-                                <input type="number" class="rate-input" value="0.23" step="0.001" data-operation="multiply" title="汇率调节">
+                                <input type="number" class="rate-input" value="0.23" step="0.001" data-operation="multiply">
                                 <span>= 港币</span>
                             </div>
                             <input type="number" class="amount-input" placeholder="输入台币金额">
@@ -1092,6 +1095,10 @@
                     <div class="receipt-row">
                         <span class="label">兑换金额:</span>
                         <span class="value">${sourceAmount} ${fromCurrency}</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">汇率:</span>
+                        <span class="value">${rate}</span>
                     </div>
                     <div class="receipt-row">
                         <span class="label">兑换结果:</span>
